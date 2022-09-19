@@ -14,21 +14,10 @@ class NetworkHelper {
     if (apiResponse.statusCode == 200) {
       //apiResponde.body shows the body of the given API
       String data = apiResponse.body;
-     return jsonDecode(data);
-
- 
-
-    
+      return jsonDecode(data);
     } else {
-      return Column(
-        children: const [
-          Text(
-              'Unable to connect to the internet. Please check your connect and try again')
-        ],
-      );
+      
       print(apiResponse.statusCode);
     }
   }
 }
-
-

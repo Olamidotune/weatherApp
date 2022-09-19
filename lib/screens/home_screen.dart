@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:getweather/screens/location_screen.dart';
 import 'package:getweather/services/networking.dart';
+import 'package:getweather/services/weather.dart';
 import '../services/location.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -17,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   // put getLocation in the initState so as to get the location everytime I click hot restart.
   @override
   void initState() {
@@ -27,22 +26,27 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getLocationWeatherData() async {
-    Location location = Location();
-    // remember for await to work, you need to use fututre in it method.
-    await location.getCurrentLocation();
+    WeatherModel weatherModel = WeatherModel();
+    var weatherData = await weatherModel.getLocationWeather();
 
-    NetworkHelper networkHelper = NetworkHelper(
-        'https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey&units=metric');
-    var weatherData = await networkHelper.getNetworkData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return LocationScreen(
+            locationWeather: weatherData,
+          );
+        }));
+      });
+    });
 
-    Navigator.push(
-      context,
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => LocationScreen(
-          locationWeather: weatherData,
-        ),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute<void>(
+    //     builder: (BuildContext context) => LocationScreen(
+    //       locationWeather: weatherData,
+    //     ),
+    //   ),
+    // );
   }
 
   @override

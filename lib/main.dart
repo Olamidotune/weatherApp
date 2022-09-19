@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getweather/screens/city_screen.dart';
 import 'package:getweather/screens/home_screen.dart';
 import 'package:getweather/screens/location_screen.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routeName:(context) => const HomeScreen(),
         LocationScreen.routeName:(context) =>  const LocationScreen(),
+        CityScreen.routeName:(context) =>  const CityScreen(),
       },
     );
   }
