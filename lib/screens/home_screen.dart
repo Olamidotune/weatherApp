@@ -29,24 +29,15 @@ class _HomeScreenState extends State<HomeScreen> {
     WeatherModel weatherModel = WeatherModel();
     var weatherData = await weatherModel.getLocationWeather();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 3), () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return LocationScreen(
-            locationWeather: weatherData,
-          );
-        }));
-      });
-    });
-
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute<void>(
-    //     builder: (BuildContext context) => LocationScreen(
-    //       locationWeather: weatherData,
-    //     ),
-    //   ),
-    // );
+      if (!mounted) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => LocationScreen(
+          locationWeather: weatherData,
+        ),
+      ),
+    );
   }
 
   @override
@@ -134,3 +125,4 @@ class _HomeScreenState extends State<HomeScreen> {
 //put the getWeatherData inside the build method so it refreshes everytime the screen is buildt.
 
 
+//  image: NetworkImage('https://bit.ly/3xzgaa4')
